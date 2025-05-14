@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Match{% endblock %}
+
+{% block content %}
+
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">{{ match.home_team.name }} 🆚 {{ match.away_team.name }}</h1>
+    <div class="d-flex justify-content-center gap-3">
+    <a href="{{ path('paris_create_form', {'matchId': match.gameId}) }}" class="btn btn-success">Parier</a>
+
+
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg p-4">
+                <h4 class="text-center text-primary">📅 Date : {{ match.date|date("d/m/Y H:i") }}</h4>
+
+                <div class="row mt-4">
+                    <!-- Équipe Domicile -->
+                    <div class="col-md-6 text-center">
+                        <h3 class="text-success">{{ match.home_team.market }} {{ match.home_team.name }}</h3>
+                        <h4 class="text-secondary">🏠 Alias : {{ match.home_team.alias }}</h4>
+                        {% if match.home_team.score != '' %}
+                            <h2 class="text-primary">🔢 Score : {{ match.home_team.score }}</h2>
+                        {% endif %}
+                        <br><br>
+                        <h4 class="text-dark text-left" >Statistiques de l'équipe</h4>
+                        <br>
+                        <ul class="list-group mt-3">
+                            <li class="list-group-item">📊 Matches joués : {{ match.home_team.details.games_played }}</li>
+                            <li class="list-group-item">🎯 Pourcentage tirs : {{ (match.home_team.details.field_goals_pct * 100)|round(1) }}%</li>
+                            <li class="list-group-item">🎯 3 pts : {{ (match.home_team.details.three_points_pct * 100)|round(1) }}%</li>
+                            <li class="list-group-item">🏀 Rebonds : {{ match.home_team.details.rebounds }}</li>
+                            <li class="list-group-item">🎯 Passes : {{ match.home_team.details.assists }}</li>
+                            <li class="list-group-item">⚡ Interceptions : {{ match.home_team.details.steals }}</li>
+                            <li class="list-group-item">❌ Pertes de balle : {{ match.home_team.details.turnovers }}</li>
+                            <li class="list-group-item">📈 Efficacité : {{ match.home_team.details.efficiency }}</li>
+                        </ul>
+
+                    </div>
+
+                    <!-- Équipe Extérieure -->
+                    <div class="col-md-6 text-center">
+                        <h3 class="text-danger">{{ match.away_team.market }} {{ match.away_team.name }}</h3>
+                        <h4 class="text-secondary">🚀 Alias : {{ match.away_team.alias }}</h4>
+                        {% if match.away_team.score != '' %}
+                            <h2 class="text-primary">🔢 Score : {{ match.away_team.score }}</h2>
+                        {% endif %}
+                        <br><br>
+                        <h4 class="text-dark" >Statistiques de l'équipe</h4>
+                    <br>
+                        <ul class="list-group mt-3">
+                            <li class="list-group-item">📊 Matches joués : {{ match.away_team.details.games_played }}</li>
+                            <li class="list-group-item">🎯 Pourcentage tirs : {{ (match.away_team.details.field_goals_pct * 100)|round(1) }}%</li>
+                            <li class="list-group-item">🎯 3 pts : {{ (match.away_team.details.three_points_pct * 100)|round(1) }}%</li>
+                            <li class="list-group-item">🏀 Rebonds : {{ match.away_team.details.rebounds }}</li>
+                            <li class="list-group-item">🎯 Passes : {{ match.away_team.details.assists }}</li>
+                            <li class="list-group-item">⚡ Interceptions : {{ match.away_team.details.steals }}</li>
+                            <li class="list-group-item">❌ Pertes de balle : {{ match.away_team.details.turnovers }}</li>
+                            <li class="list-group-item">📈 Efficacité : {{ match.away_team.details.efficiency }}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                {% if match.away_team.score != '' %}
+
+                    <!-- Détermination du vainqueur -->
+                    <div class="text-center mt-4">
+                        {% if match.home_team.score > match.away_team.score %}
+                            <h2 class="text-success">🏆 Vainqueur : {{ match.home_team.name }}</h2>
+                        {% elseif match.home_team.score < match.away_team.score %}
+                            <h2 class="text-danger">🏆 Vainqueur : {{ match.away_team.name }}</h2>
+                        {% else %}
+                            <h2 class="text-warning">⚖️ Match nul</h2>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <div class="text-center mt-4">
+                    <a href="{{ path('app_matchs') }}" class="btn btn-primary">🔙 Retour aux matchs</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

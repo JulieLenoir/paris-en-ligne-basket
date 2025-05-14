@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Utilisateurs{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Liste des utilisateurs et paris</h1>
+
+        {% if users is not empty %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered">
+                    <thead class="table-dark text-center">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Paris</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td class="text-center">{{ user.id }}</td>
+                                <td>{{ user.nom }} {{ user.prenom }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>
+                                    {% if user.getParis() is not empty %}
+                                        <ul class="list-unstyled">
+                                            {% for pari in user.getParis() %}
+                                                <li class="bg-light p-2 rounded mb-1">
+                                                    <strong>Mise:</strong> {{ pari.mise }}€ |
+                                                    <strong>Gains:</strong> {{ pari.gains }}€ |
+                                                    <strong>Perte:</strong> {{ pari.perte }}€ |
+                                                    <strong>Statut:</strong> 
+                                                    <span class="badge 
+                                                        {% if pari.statut == 'gagné' %}bg-success
+                                                        {% elseif pari.statut == 'perdu' %}bg-danger
+                                                        {% else %}bg-warning{% endif %}">
+                                                        {{ pari.statut }}
+                                                    </span>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Aucun pari</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                         
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <a href="{{ path('admin_teams_stats') }}" class="btn btn btn-warning ">Voir les stats</a>  {# Bouton pour voir les stats des équipes #}
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-warning text-center">
+                Aucun utilisateur trouvé.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+
+

@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+
+         {% if not app.user %}
+            <!-- Message si l'utilisateur n'est pas connecté -->
+            <div class="alert alert-danger text-center">
+                Vous n'êtes pas connecté. Veuillez vous identifier pour accéder à votre profil.
+            </div>
+        {% endif %}
+            <form method="post" class="card shadow-sm p-4">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="alert alert-info text-center">
+                        Vous êtes connecté en tant que <strong>{{ app.user.userIdentifier }}</strong>, 
+                        <a href="{{ path('app_logout') }}" class="text-decoration-none">Déconnexion</a>
+                    </div>
+                {% endif %}
+
+                <h1 class="h4 mb-4 text-center font-weight-bold">Veuillez vous connecter</h1>
+
+                <div class="form-group mb-3">
+                    <label for="inputEmail" class="form-label">Adresse email</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Entrez votre email" autocomplete="email" required autofocus>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="inputPassword" class="form-label">Mot de passe</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Entrez votre mot de passe" autocomplete="current-password" required>
+                </div>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <div class="form-check mb-3">
+                    <input type="checkbox" name="_remember_me" class="form-check-input" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
+                </div>
+
+                <button class="btn btn btn-warning w-100" type="submit">Se connecter</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+ /* Style pour forcer le footer en bas */
+ body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Assure que la page occupe toute la hauteur de la fenêtre */
+    margin: 0; /* Supprime les marges par défaut */
+}
+
+main {
+    flex: 1; /* Prend tout l'espace disponible entre le header et le footer */
+}
+

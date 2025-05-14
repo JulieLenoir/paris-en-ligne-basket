@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistiques des équipes{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl text-center font-bold mb-6">Statistiques des équipes</h1>
+
+    {# Statistiques par équipe #}
+    <div class="bg-white shadow overflow-hidden rounded-lg">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Équipe</th>
+                    <th scope="col">Matchs joués</th>
+                    <th scope="col">Points/Match</th>
+                    <th scope="col">Buts sur terrain</th>
+                    <th scope="col"> 3 points</th>
+                    <th scope="col">Rebonds</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for team in teams_stats %}
+                    <tr>
+                        <td>{{ team.team_name }} ({{ team.team_market }})</td>
+                        <td>{{ team.stats.games_played }}</td>
+                        
+                        <td>
+                            {% if team.stats.games_played > 0 %}
+                                {{ (team.stats.points / team.stats.games_played)|number_format(0) }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+
+                        <td>{{ team.stats.field_goals_made }}</td>  {# Nouvelle stat #}
+                        <td>
+                            {% if team.stats.three_point_pct is defined %}
+                                {{ (team.stats.three_point_pct * 100)|number_format(1) }}%
+                            {% else %}
+                                N/A%
+                            {% endif %}
+                        </td>
+                        <td>{{ team.stats.total_rebounds }}</td>  {# Nouvelle stat #}
+                       
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

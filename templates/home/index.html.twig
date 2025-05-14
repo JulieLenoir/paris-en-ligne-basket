@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue sur notre site de paris sportifs{% endblock %}
+
+{% block content %}
+<!-- Bannières de prévention -->
+<div class="alert alert-warning text-center mb-4" role="alert">
+    <strong>Avertissement :</strong> Les paris sont réservés aux personnes majeures. Pariez de manière responsable. Si vous avez des problèmes d'addiction, <a href="https://www.joueurs-info-service.fr/" target="_blank" class="alert-link">en savoir plus sur l'aide disponible</a>.
+</div>
+
+
+<!-- Page content -->
+<header class="py-5 bg-light border-bottom mb-4">
+    <div class="container">
+        <div class="text-center my-5">
+            <h1 class="fw-bolder">Bienvenue sur PariBasket</h1>
+            <p class="lead mb-0">Parier, c'est gagner !</p>
+        </div>
+    </div>
+</header>
+
+<div class="container mt-4">
+    <h2 class="text-primary text-center mb-4">🏀 Matchs à venir</h2>
+
+    {% if matchs is empty %}
+        <div class="alert alert-warning text-center">Aucun match à venir pour le moment.</div>
+    {% else %}
+        <div class="row justify-content-center">
+            {% for match in matchs|slice(0, 5) %}
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm border-0 rounded-lg match-card">
+                        <div class="card-body">
+                            <h5 class="card-title text-center fw-bold">
+                                🏀 {{ match.home_team }} <span class="text-danger">vs</span> {{ match.away_team }}
+                            </h5>
+                            <hr>
+                            <p class="card-text"><strong>📆 Date :</strong> {{ match.date|date("d/m/Y H:i") }}</p>
+                            <p class="card-text"><strong>🏟 Stade :</strong> {{ match.name }} ({{ match.city }})</p>
+                            <p class="card-text"><strong>👥 Capacité :</strong> {{ match.capacity }} places</p>
+                            <a href="{{ path('app_matchs_details', {'id': match.gameId}) }}" class="btn btn-info">Voir les détails</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+<style>
+    .match-card {
+        transition: transform 0.2s, box-shadow 0.3s;
+    }
+
+    .match-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    hr {
+        margin: 10px 0;
+    }
+
+     .match-card, .past-match-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease-in-out;
+        background-color: #f9f9f9;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .match-card:hover, .past-match-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+
+    .past-match-card {
+        border-left: 6px solid #28a745;
+        background-color: #f1fdf1;
+    }
+
+    .match-card {
+        border-left: 6px solid #007bff;
+        background-color: #f1f6fd;
+    }
+
+    h1.text-gradient {
+        background: linear-gradient(90deg, #ff6a00, #ee0979);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .btn-block {
+        width: 100%;
+    }
+
+    
+</style>
+
+{% endblock %}

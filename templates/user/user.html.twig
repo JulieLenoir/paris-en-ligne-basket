@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Compte
+{% endblock %}
+
+{% block content %}
+	<div class="container mt-5">
+		<h1 class="mb-4 text-center">Mon Profil</h1>
+
+		<!-- Card contenant les informations personnelles de l'utilisateur -->
+		<div class="card text-center mb-4">
+			<div class="card-header">
+				Informations personnelles
+			</div>
+			<div class="card-body">
+				{% if user is not null %}
+					<p class="card-text">
+						<strong>Nom:</strong>
+					</p>
+					<p>Nom :
+						{{ user.nom }}</p>
+					<br>
+					<strong>Prénom:</strong>
+					{{ user.prenom }}<br>
+					<strong>Email:</strong>
+					{{ user.email }}<br>
+					<strong>Date de naissance:</strong>
+					{% if user.dateNaissance %}
+						{{ user.dateNaissance|date('d-m-Y') }}
+					{% else %}
+						Non renseignée
+					{% endif %}
+				</p>
+
+			{% else %}
+				<p>Aucun utilisateur trouvé.</p>
+			{% endif %}
+		</div>
+	</div>
+
+	<!-- Card contenant le solde de l'utilisateur -->
+	<div class="card text-center">
+		<div class="card-header">
+			<h3>Solde</h3>
+		</div>
+		<div class="card-body">
+			<p class="card-text">
+				<strong>Solde actuel:</strong>
+				{{ user.solde }}
+				€
+			</p>
+
+			<div>
+				<a href="{{ path('user_add_solde', {'id': user.id}) }}" class="btn btn-success">Ajouter un montant</a>
+				<a href="{{ path('user_update_solde', {'id': user.id}) }}" class="btn btn-warning">Modifier le solde</a>
+				<a href="{{ path('user_delete_solde', {'id': user.id}) }}" class="btn btn-danger">Supprimer le solde</a>
+			</div>
+		</div>
+	</div>
+
+</div>{% endblock %}

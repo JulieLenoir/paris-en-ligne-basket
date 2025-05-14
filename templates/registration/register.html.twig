@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <form method="post" class="card shadow-sm p-4">
+                <h1 class="h4 mb-4 text-center font-weight-bold">Inscrivez-vous</h1>
+                
+                <!-- Affichage des erreurs globaux du formulaire -->
+                {% if registrationForm.vars.errors|length > 0 %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form_errors(registrationForm) }}
+                    </div>
+                {% endif %}
+
+                <!-- Champ email -->
+                <div class="form-group mb-3">
+                    {{ form_row(registrationForm.email, {
+                        'label': 'Adresse Email',
+                        'attr': {'class': 'form-control', 'placeholder': 'Entrez votre email'}
+                    }) }}
+                </div>
+
+                <!-- Champ mot de passe -->
+                <div class="form-group mb-3">
+                    {{ form_row(registrationForm.plainPassword, {
+                        'label': 'Mot de passe',
+                        'attr': {'class': 'form-control', 'placeholder': 'Entrez votre mot de passe'}
+                    }) }}
+                </div>
+
+                <!-- Champ nom -->
+                <div class="form-group mb-3">
+                    {{ form_row(registrationForm.nom, {
+                        'label': 'Nom',
+                        'attr': {'class': 'form-control', 'placeholder': 'Entrez votre nom'}
+                    }) }}
+                </div>
+
+                <!-- Champ prénom -->
+                <div class="form-group mb-3">
+                    {{ form_row(registrationForm.prenom, {
+                        'label': 'Prénom',
+                        'attr': {'class': 'form-control', 'placeholder': 'Entrez votre prénom'}
+                    }) }}
+                </div>
+
+                <!-- Champ date de naissance -->
+                <div class="form-group mb-3">
+                    {{ form_row(registrationForm.dateNaissance, {
+                        'label': 'Date de naissance',
+                        'attr': {'class': 'form-control', 'placeholder': 'Sélectionnez votre date de naissance'}
+                    }) }}
+                </div>
+
+                <!-- Champ solde -->
+                <div class="form-group mb-3">
+                    {{ form_row(registrationForm.solde, {
+                        'label': 'Solde initial',
+                        'attr': {'class': 'form-control', 'placeholder': 'Solde initial'}
+                    }) }}
+                </div>
+
+                <!-- Case à cocher des termes et conditions -->
+                <div class="form-check mb-3">
+                    {{ form_widget(registrationForm.agreeTerms, {
+                        'attr': {'class': 'form-check-input'}
+                    }) }}
+                    <label class="form-check-label" for="{{ registrationForm.agreeTerms.vars.id }}">
+                        J'accepte les termes et conditions
+                    </label>
+                </div>
+
+                <!-- Bouton d'inscription -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-warning w-100">S'inscrire</button>
+                </div>
+
+                {{ form_rest(registrationForm) }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

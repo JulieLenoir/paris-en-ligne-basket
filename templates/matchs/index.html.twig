@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+{% block title %}Matchs
+{% endblock %}
+
+
+{% block content %}
+	<div class="container mt-4">
+		<h1 class="text-center mb-5 ">📅 Matchs</h1>
+
+		<!-- Disposition en deux colonnes pour les matchs passés et à venir -->
+		<div
+			class="row">
+			<!-- Matchs passés -->
+			<div class="col-md-6">
+				<h2 class="text-success text-center mt-5">Matchs passés</h2>
+				{% if matchs_passe is empty %}
+					<div class="alert alert-secondary text-center">Aucun match passé trouvé.</div>
+				{% else %}
+					<div class="row justify-content-center">
+						{% for match in matchs_passe|slice(0, 5) %}
+							<div class="col-md-12 mb-4">
+								<div class="card shadow-lg border-0 rounded-lg past-match-card">
+									<div class="card-body">
+										<h5 class="card-title text-center fw-bold text-dark">
+											🏀
+											{{ match.home_team }}
+											<span class="text-danger">vs</span>
+											{{ match.away_team }}
+										</h5>
+										<hr class="card-divider">
+										<p class="card-text">
+											<strong>🏆 Vainqueur :</strong>
+											{% if match.home_score > match.away_score %}
+												<span class="text-success">{{ match.home_team }}</span>
+											{% elseif match.home_score < match.away_score %}
+												<span class="text-success">{{ match.away_team }}</span>
+											{% else %}
+												<span class="text-warning">Match nul</span>
+											{% endif %}
+										</p>
+										<p class="card-text">
+											<strong>🔢 Score :</strong>
+											{{ match.home_score }}
+											-
+											{{ match.away_score }}
+										</p>
+										<p class="card-text">
+											<strong>📆 Date :</strong>
+											{{ match.date|date("d/m/Y H:i") }}</p>
+										<a href="{{ path('app_matchs_details', {'id': match.gameId}) }}" class="btn btn-info btn-block">Voir les détails</a>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				{% endif %}
+			</div>
+
+			<!-- Matchs à venir -->
+			<div class="col-md-6">
+				<h2 class="text-primary text-center mt-5">Matchs à venir</h2>
+				{% if matchs is empty %}
+					<div class="alert alert-warning text-center">Aucun match à venir pour le moment.</div>
+				{% else %}
+					<div class="row justify-content-center">
+						{% for match in matchs|slice(0, 5) %}
+							<div class="col-md-12 mb-4">
+								<div class="card shadow-lg border-0 rounded-lg match-card">
+									<div class="card-body">
+										<h5 class="card-title text-center fw-bold text-dark">
+											🏀
+											{{ match.home_team }}
+											<span class="text-danger">vs</span>
+											{{ match.away_team }}
+										</h5>
+										<hr class="card-divider">
+										<p class="card-text">
+											<strong>📆 Date :</strong>
+											{{ match.date|date("d/m/Y H:i") }}</p>
+										<p class="card-text">
+											<strong>🏟 Stade :</strong>
+											{{ match.name }}
+											({{ match.city }})</p>
+										<p class="card-text">
+											<strong>👥 Capacité :</strong>
+											{{ match.capacity }}
+											places</p>
+										<a href="{{ path('app_matchs_details', {'id': match.gameId}) }}" class="btn btn-primary btn-block">Voir les détails</a>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+	<style>
+		.match-card,
+		.past-match-card {
+			transition: transform 0.3s ease, box-shadow 0.3s ease-in-out;
+			background-color: #f9f9f9;
+			border-radius: 12px;
+			padding: 15px;
+			box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+		}
+
+		.match-card:hover,
+		.past-match-card:hover {
+			transform: translateY(-8px);
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+		}
+
+		.card-divider {
+			border-top: 2px solid #e5e5e5;
+			margin: 10px 0;
+		}
+
+		.past-match-card {
+			border-left: 6px solid #28a745;
+			background-color: #f1fdf1;
+		}
+
+		.match-card {
+			border-left: 6px solid #007bff;
+			background-color: #f1f6fd;
+		}
+
+		h1.text-gradient {
+			background: linear-gradient(90deg, #ff6a00, #ee0979);
+			-webkit-background-clip: text;
+			color: transparent;
+		}
+
+		.btn-block {
+			width: 100%;
+		}
+	</style>
+
+
+{% endblock %}

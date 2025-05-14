@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Solde{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Modifier Solde</h1>
+    {{ form_start(form) }}
+        <div class="mb-3">
+            {{ form_row(form.Solde) }}
+        </div>
+        <button type="submit" class="btn btn-warning w-100">Modifier</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+	<h1 class="text-center">Liste des Paris</h1>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th hidden>ID</th>
+				<th>Match</th>
+				<th>Mise de départ</th>
+				<th>Pari sur l'équipe</th>
+				<th>Score</th>
+				<th>Statut du pari</th>
+				<th>Gains</th>
+				<th>Perte</th>
+				<th>Solde</th>
+
+
+			</tr>
+		</thead>
+		<tbody>
+			{% for pari in result %}
+
+				<tr>
+					<td hidden>{{ pari.id }}</td>
+					<td>
+						{{ pari.match.homeTeamName }}
+						<b>
+							vs
+						</b>
+						{{ pari.match.awayTeamName }}
+					</td>
+					<td>{{ pari.mise }}</td>
+					<td>{{ pari.equipe }}</td>
+
+					<td>
+						{{ pari.match.homePoints }}
+						-
+						{{ pari.match.awayPoints }}
+					</td>
+					<td>{{ pari.statut }}</td>
+					{% if pari.gains == null  %}
+						<td></td>
+					{% else %}
+						<td>+
+							{{ pari.gains }}€</td>
+					{% endif %}
+					{% if pari.perte == null  %}
+						<td></td>
+					{% else %}
+						<td>-
+							{{ pari.perte }}€</td>
+					{% endif %}
+
+					<td>{{ pari.soldeCloture is not null ? pari.soldeCloture ~ '€' : 'N/A' }}</td>
+
+
+					<td>
+						{% if pari.statut == 'en cours' %}
+							<form class="delete-pari-form" data-id="{{ pari.id }}" method="post">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete_pari_' ~ pari.id) }}">
+								<button type="button" class="btn btn-danger btn-sm delete-pari-btn">
+									Supprimer
+								</button>
+							</form>
+						{% endif %}
+
+
+					</td>
+
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="8" class="text-center">Aucun pari trouvé.</td>
+				</tr>
+			{% endfor %}
+			<div class="text-center mt-4">
+				<a href="{{ path('app_matchs') }}" class="btn btn-primary">Retour aux matchs</a>
+
+			</div>
+
+		</tbody>
+	</table>
+
+	{# <a href="{{ path('paris_create') }}" class="btn btn-success">Ajouter un pari</a> #}
+{% endblock %}

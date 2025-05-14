@@ -1,0 +1,39 @@
+# --- Symfony ---
+/vendor/
+/var/
+/.env.local
+.env.test.local
+.env.dev.local
+.env.*.local
+/phpunit.result.cache
+.env
+.env.test
+# --- Logs ---
+*.log
+
+# --- Caches ---
+.cache/
+/node_modules/
+.pnp.*
+.pnp
+
+# --- Composer ---
+composer.lock
+composer.phar
+
+# --- Doctrine Migrations (si générées temporairement) ---
+/migrations/*_*.php
+
+# --- IDE / éditeurs ---
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# --- Systèmes d'exploitation ---
+.DS_Store
+Thumbs.db
+
+# --- Docker ---
+docker/.env
+docker-compose.override.yml
