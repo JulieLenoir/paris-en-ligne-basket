@@ -1,7 +1,7 @@
-# paris-en-ligne-basket
 
 # PARIBASKET – Application de Paris Sportifs Fictifs sur la NBA
 # paris-en-ligne-basket
+
  **PARIBASKET** est une application web dédiée aux paris fictifs sur les matchs NBA. Elle permet aux utilisateurs de : - consulter les statistiques des équipes et joueurs NBA (via l’API SportRadar), - simuler des matchs, - parier virtuellement et gérer leur solde.  Ce projet a été réalisé dans un contexte pédagogique.
 
 ## Objectifs pédagogiques
